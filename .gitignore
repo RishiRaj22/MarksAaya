@@ -1,0 +1,18 @@
+*.apk
+/*/google-services.json
+/app/relase
+/build
+/captures
+projectFilesBackup/
+local.properties
+.gradle/
+.idea/
+*.iml
+# OS-specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

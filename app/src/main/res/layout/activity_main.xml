@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+
+ >
+
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+
+        android:id="@+id/ll"
+        android:gravity="center_horizontal">
+
+        <android.support.v7.widget.AppCompatButton android:elevation="4dp" android:translationZ="4dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:drawableTop="@drawable/ic_assignment_white_64dp"
+            android:id="@+id/marks_button"
+            android:theme="@style/PurpleColoredButton"
+            android:text="@string/marks" />
+
+        <android.support.v7.widget.AppCompatButton android:elevation="4dp" android:translationZ="4dp"
+            android:layout_width="150dp"
+            android:drawableTop="@drawable/ic_attendance_white_64dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:theme="@style/BlueColoredButton"
+            android:id="@+id/attendance_button"
+            android:text="@string/attendance"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll"
+        android:orientation="horizontal"
+        android:id="@+id/ll2"
+        android:gravity="center_horizontal"
+        android:paddingTop="12dp">
+
+        <android.support.v7.widget.AppCompatButton android:elevation="4dp" android:translationZ="4dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:drawableTop="@drawable/ic_logout_white_24dp"
+            android:id="@+id/logout_button"
+            android:theme="@style/RedColoredButton"
+            android:text="@string/credits" />
+
+        <android.support.v7.widget.AppCompatButton android:elevation="4dp" android:translationZ="4dp"
+            android:layout_width="150dp"
+            android:drawableTop="@drawable/ic_more_white_64dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:theme="@style/GreenColoredButton"
+            android:id="@+id/more_button"
+            android:text="@string/more"/>
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:id="@+id/sl"
+        android:layout_below="@id/ll2"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentBottom="true">
+        <org.sufficientlysecure.htmltextview.HtmlTextView
+            android:id="@+id/html_text"
+            android:layout_width="wrap_content"
+            android:textColor="#000000"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+    </ScrollView>
+
+
+</RelativeLayout>

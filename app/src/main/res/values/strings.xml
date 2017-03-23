@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Students App for Chanakya</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="attendance">Attendance</string>
+    <string name="marks">Marks</string>
+    <string name="submit">Submit</string>
+    <string name="create_account">No account yet? Create one</string>
+    <string name="credential_error">Wrong username/password given</string>
+    <string name="connection_error">No internet connection detected</string>
+    <string name="success">Successfully carried out</string>
+    <string name="cookie">cookie</string>
+    <string name="forgot_pass">Reset Password</string>
+    <string name="default_launcher">null</string>
+    <string name="logout">Logout</string>
+    <string name="more">More</string>
+    <string name="app_ad_id">ca-app-pub-6905676924902031~3315860304</string>
+    <string name="marks_ad_id">ca-app-pub-6905676924902031/4792593503</string>
+    <string name="attendance_ad_id">ca-app-pub-6905676924902031/3036658706</string>
+    <string name="more_ad_id">ca-app-pub-6905676924902031/4513391900</string>
+    <string name="credits">Info</string>
+    <string name="rate">Rate us</string>
+    <string name="share">Share App</string>
+    <string name="feedback">Feedback</string>
+    <string name="ourapps">Our apps</string>
+    <string name="disclaimer">The developer is not responsible for the accuracy of the data displayed. We do not store any user ID or password in any form with us. All the information is stored in your device, and HTTP Requests are sent directly to the Chanakya Server from your device. For queries and requests leave us feedback.</string>
+    <string name="ad_id_webview">ca-app-pub-6905676924902031/5990125106</string>
+    <string name="disc_text">Disclaimer</string>
+    <string name="developer">Developed by Rishi Raj &amp; Ritu Raj</string>
+    <string name="login">Login</string>
+    <string name="login_what">Chanakya Login</string>
+    <string name="last_updated_unknown">Last Updated: Unknown</string>
+    <string name="timeout">Connection timed out</string>
+    <string name="server_error">Error in connecting to server. If error persists, contact developer</string>
+    <string name="logging">Logging in</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="pass_change">Your username or password may have changed</string>
+    <string name="retry">Retry</string>
+    <string name="cont_off">Continue offline</string>
+    <string name="reconn">Reconnecting to Chanakya</string>
+
+
+</resources>

@@ -18,9 +18,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import nitpchankyaunofficial.R;
 
@@ -39,10 +36,6 @@ public class WebViewActivity extends AppCompatActivity implements ActivityCompat
         site = getIntent().getStringExtra("site");
         name = getIntent().getStringExtra("name");
         setContentView(R.layout.activity_web_view);
-        AdView webAd= (AdView) findViewById(R.id.webAd);
-        MobileAds.initialize(this, "ca-app-pub-6905676924902031~3315860304");
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("E13A0941A9BD375F6073D614426FC721").addTestDevice("7106C756201B730736FDD9855AB08A38").build();
-        webAd.loadAd(adRequest);
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAllowFileAccess(true);

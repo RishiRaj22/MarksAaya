@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences=getSharedPreferences("User Details",MODE_PRIVATE);
-        setUpMainActivity();
         if(sharedPreferences.getString(getString(R.string.user_name),null)==null)
         {
             Intent intent=new Intent(this,LoginActivity.class);
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else {
+            setUpMainActivity();
             if (getIntent().getStringExtra(getString(R.string.cookie)) != null) {
                 cookie = getIntent().getStringExtra(getString(R.string.cookie)).toString();
                 TrySite trySite=new TrySite();
@@ -274,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
                 marksIntent(v);
             }
         });
+        Intent i=new Intent();
+
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

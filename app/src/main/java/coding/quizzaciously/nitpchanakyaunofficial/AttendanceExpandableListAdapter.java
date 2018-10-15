@@ -23,18 +23,29 @@ import coding.quizzaciously.nitpchanakyaunofficial.datahandler.SubjectAttendance
 public class AttendanceExpandableListAdapter extends BaseExpandableListAdapter {
         private Context context;
         private List<SubjectAttendanceValue> subjects;
+        private List<SubjectAttendanceValue> old;
 
-        public AttendanceExpandableListAdapter(Context context, ArrayList<SubjectAttendanceValue> subjectAttendanceValues) {
+
+    public AttendanceExpandableListAdapter(Context context, ArrayList<SubjectAttendanceValue> subjectAttendanceValues, ArrayList<SubjectAttendanceValue> oldSubAtt) {
             this.context = context;
             this.subjects=subjectAttendanceValues;
+            this.old=oldSubAtt;
         }
 
 
         @Override
         public Object getChild(int listPosition, int expandedListPosition) {
             ArrayList<String> strings=new ArrayList<String>();
+            String subTemp=displayAttendance(subjects.get(listPosition).getChildAt(expandedListPosition).getAttendedClasses(),subjects.get(listPosition).getChildAt(expandedListPosition).getTotalClasses());
             strings.add(subjects.get(listPosition).getChildAt(expandedListPosition).getName());
-            strings.add(displayAttendance(subjects.get(listPosition).getChildAt(expandedListPosition).getAttendedClasses(),subjects.get(listPosition).getChildAt(expandedListPosition).getTotalClasses()));
+            strings.add(subTemp);
+            if(old!=null&&old.size()>listPosition&&old.get(listPosition).size()>expandedListPosition)
+            {
+                String oldTemp=displayAttendance(old.get(listPosition).getChildAt(expandedListPosition).getAttendedClasses(),old.get(listPosition).getChildAt(expandedListPosition).getTotalClasses());
+                strings.add(subTemp.equals(oldTemp)?"":"New");
+            }
+            else
+                strings.add("");
             return strings;
         }
 
@@ -57,8 +68,12 @@ public class AttendanceExpandableListAdapter extends BaseExpandableListAdapter {
             TextView marksText = (TextView) convertView
                     .findViewById(R.id.marksText);
 
+            TextView redDot = (TextView) convertView
+                    .findViewById(R.id.redDot);
+
             subText.setText(expandedListText.get(0));
             marksText.setText(expandedListText.get(1));
+            redDot.setText(expandedListText.get(2));
             return convertView;
         }
 
@@ -72,7 +87,15 @@ public class AttendanceExpandableListAdapter extends BaseExpandableListAdapter {
 
             ArrayList<String> arrayList= new ArrayList<String>();
             arrayList.add(subjects.get(listPosition).getName());
-            arrayList.add(displayAttendance(subjects.get(listPosition).getAttendedClasses(),subjects.get(listPosition).getTotalClasses()));
+            String stemp=displayAttendance(subjects.get(listPosition).getAttendedClasses(),subjects.get(listPosition).getTotalClasses());
+            arrayList.add(stemp);
+            if(old!=null&&old.size()>listPosition)
+            {
+                String otemp=displayAttendance(old.get(listPosition).getAttendedClasses(),old.get(listPosition).getTotalClasses());
+                arrayList.add(stemp.equals(otemp)?"":"New");
+            }
+            else
+                arrayList.add("");
             return arrayList;
         }
 
@@ -105,10 +128,14 @@ public class AttendanceExpandableListAdapter extends BaseExpandableListAdapter {
                     .findViewById(R.id.itemText);
             TextView marksTextView = (TextView) convertView
                     .findViewById(R.id.marksText);
+            TextView redDotTextView = (TextView) convertView
+                    .findViewById(R.id.redDot);
             listTitleTextView.setTypeface(null, Typeface.BOLD);
             listTitleTextView.setText(listTitle.get(0));
             marksTextView.setTypeface(null, Typeface.BOLD);
             marksTextView.setText(listTitle.get(1));
+            redDotTextView.setText(listTitle.get(2));
+
 
             return convertView;
         }

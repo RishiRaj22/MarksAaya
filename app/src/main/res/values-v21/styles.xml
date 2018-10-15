@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+    </style>
+    <style name="YellowTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#ff00e1</item>
+    </style>
+    <style name="BlueTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#1584de</item>
+        <item name="colorPrimaryDark">#00579c</item>
+        <item name="colorAccent">#d50000</item>
+    </style>
+    <style name="RedTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#e7153e</item>
+        <item name="colorPrimaryDark">#a90f2d</item>
+        <item name="colorAccent">#00bfa5</item>
+    </style>
+    <style name="GreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#318e35</item>
+        <item name="colorPrimaryDark">#226425</item>
+        <item name="colorAccent">#ea80fc</item>
+    </style>
+    <style name="PurpleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#be1ed9</item>
+        <item name="colorPrimaryDark">#9124a4</item>
+        <item name="colorAccent">#4caf50</item>
+    </style>
+
+    <style name="BlueColoredButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">#ffffff</item>
+        <item name="colorButtonNormal">#158cec</item> </style>
+    <style name="RedColoredButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">#ffffff</item>
+        <item name="colorButtonNormal">#ff1744</item> </style>
+    <style name="GreenColoredButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">#ffffff</item>
+        <item name="colorButtonNormal">#43a047</item> </style>
+    <style name="PurpleColoredButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">#ffffff</item>
+        <item name="colorButtonNormal">#e040fb</item> </style>
+    <style name="WhiteColoredButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">#000000</item>
+        <item name="colorButtonNormal">@color/colorAccent</item> </style>
+
+
+    <style name="AppTheme_Dark_Dialog" parent="Theme.AppCompat.Light.Dialog">
+
+    </style>
+
+</resources>

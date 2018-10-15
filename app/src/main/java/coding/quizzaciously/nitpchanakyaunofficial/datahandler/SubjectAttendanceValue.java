@@ -1,5 +1,6 @@
 package coding.quizzaciously.nitpchanakyaunofficial.datahandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

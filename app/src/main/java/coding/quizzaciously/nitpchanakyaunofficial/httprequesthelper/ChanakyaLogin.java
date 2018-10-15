@@ -139,7 +139,8 @@ public class ChanakyaLogin  {
         }
 
         //get done
-        progressable.progress();
+        if(progressable!=null)
+            progressable.progress();
         try {
             byte[] postData= (params.toString()).getBytes();
             int postDataLength= postData.length;
@@ -198,7 +199,8 @@ public class ChanakyaLogin  {
         finally {
             con.disconnect();
         }
-        progressable.progress();
+        if(progressable!=null)
+            progressable.progress();
         Log.d("Output login",cookie.toString());
         return cookie.toString();
 

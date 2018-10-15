@@ -47,7 +47,8 @@ public class MarksLoader {
 
             con.connect();
             int responseCode = con.getResponseCode();
-            progressable.progress();
+            if(progressable!=null)
+                progressable.progress();
             if (responseCode == HttpURLConnection.HTTP_OK) { // success
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
@@ -104,7 +105,8 @@ public class MarksLoader {
 
 
                 }
-                progressable.progress();
+                if(progressable!=null)
+                    progressable.progress();
 
 
                 String[] options=temp.toString().split("[\\n]+");
@@ -122,7 +124,8 @@ public class MarksLoader {
                 int postDataLength= postData.length;
                 try {
                     con = (HttpURLConnection) obj.openConnection();
-                    progressable.progress();
+                    if(progressable!=null)
+                        progressable.progress();
                 con.setRequestMethod("POST");
                 con.setRequestProperty("User-Agent", USER_AGENT);
                 con.setRequestProperty("Referer", "http://exam.nitp.ac.in:9001/default.aspx");
@@ -145,7 +148,8 @@ public class MarksLoader {
                 con.getOutputStream().write(postData);
                     os.flush();
                 os.close();
-                    progressable.progress();
+                    if(progressable!=null)
+                        progressable.progress();
 
                     String fc="";
                 boolean bola=false;
@@ -157,7 +161,8 @@ public class MarksLoader {
                     file.println(System.currentTimeMillis());
                     while ((inputLine = in.readLine()) != null)
                         file.print(inputLine);
-                    progressable.progress();
+                    if(progressable!=null)
+                        progressable.progress();
                     file.close();
                 }
                     else

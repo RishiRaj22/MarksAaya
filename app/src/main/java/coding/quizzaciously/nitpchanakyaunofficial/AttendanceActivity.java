@@ -16,9 +16,6 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,8 +38,8 @@ public class AttendanceActivity extends AppCompatActivity {
 
 
     volatile String cookie, value;
-    @BindView(R.id.attendance_ad)
-    AdView attendanceAd;
+    private ArrayList oldLoad=null;
+
     private boolean expandForFirstTime = true;
     @BindView(R.id.getSession)
     Spinner session;
@@ -56,9 +53,6 @@ public class AttendanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
         ButterKnife.bind(this);
-        MobileAds.initialize(this, "ca-app-pub-6905676924902031~3315860304");
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("E13A0941A9BD375F6073D614426FC721").addTestDevice("7106C756201B730736FDD9855AB08A38").build();
-        attendanceAd.loadAd(adRequest);
         cookie = getIntent().getStringExtra(getString(R.string.cookie));
         GetOptionsTask getOptionsTask = new GetOptionsTask();
         SharedPreferences sharedPreferences = getSharedPreferences("User Details", MODE_PRIVATE);
@@ -83,14 +77,11 @@ public class AttendanceActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         alertDialog.hide();
-
                     }
                 });
                 alertDialog.show();
             } else getOptionsTask.execute(value);
         }
-
-
     }
 
     private class GetOptionsTask extends AsyncTask<String, Integer, ArrayList> implements Progressable {
@@ -112,11 +103,12 @@ public class AttendanceActivity extends AppCompatActivity {
             AttendanceLoader attendanceLoader = new AttendanceLoader(AttendanceActivity.this, this);
             ArrayList session = new ArrayList();
             try {
-                String[] sessions = attendanceLoader.accessOptions(cookie, params[0]);
+                String[] sessions = attendanceLoader.accessOptions(cookie,params[0]);
                 for (String s : sessions) {
                     session.add(s);
                 }
                 return session;
+
             } catch (MarksError marksError) {
                 marksError.printStackTrace();
             }
@@ -198,6 +190,7 @@ public class AttendanceActivity extends AppCompatActivity {
         return text;
     }
 
+
     private class DisplayResultTask extends AsyncTask<String, Integer, ArrayList> {
         ProgressDialog pd;
         AttendanceExpandableListAdapter myAdapter = null;
@@ -222,9 +215,9 @@ public class AttendanceActivity extends AppCompatActivity {
                     return null;
             }
             publishProgress(15);
-            myAdapter = new AttendanceExpandableListAdapter(AttendanceActivity.this, subjectAttendanceValues);
+            myAdapter = new AttendanceExpandableListAdapter(AttendanceActivity.this, subjectAttendanceValues, oldLoad);
             publishProgress(10);
-            return new ArrayList();
+            return subjectAttendanceValues;
         }
 
         @Override
@@ -252,6 +245,9 @@ public class AttendanceActivity extends AppCompatActivity {
                 return;
             }
             super.onPostExecute(arrayList);
+            if(oldLoad==null)
+                oldLoad=arrayList;
+
             if (pd != null)
                 pd.hide();
             expandableListView.setAdapter(myAdapter);
@@ -308,7 +304,6 @@ public class AttendanceActivity extends AppCompatActivity {
     protected void onDestroy()
     {
         super.onDestroy();
-        attendanceAd.destroy();
     }
 
     @Override

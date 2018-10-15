@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,9 +16,6 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,14 +37,11 @@ import nitpchankyaunofficial.R;
 
 
 public class MarksActivity extends AppCompatActivity {
+    private ArrayList older=null;
     volatile String cookie, value;
-    @BindView(R.id.marks_ad)
-    AdView marksAd;
     private boolean expandForFirstTime = true;
     @BindView(R.id.getSession)
     Spinner session;
-    @BindView(R.id.getSem)
-    Spinner sem;
     @BindView(R.id.expandable_list)
     ExpandableListView expandableListView;
     @BindView(R.id.update_time)
@@ -59,9 +52,6 @@ public class MarksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marks);
         ButterKnife.bind(this);
-        MobileAds.initialize(this,"ca-app-pub-6905676924902031~3315860304");
-        AdRequest adRequest=new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("E13A0941A9BD375F6073D614426FC721").addTestDevice("7106C756201B730736FDD9855AB08A38").build();
-        marksAd.loadAd(adRequest);
         cookie = getIntent().getStringExtra(getString(R.string.cookie));
         GetOptionsTask getOptionsTask = new GetOptionsTask();
         SharedPreferences sharedPreferences = getSharedPreferences("User Details", MODE_PRIVATE);
@@ -100,7 +90,6 @@ public class MarksActivity extends AppCompatActivity {
 
     private class GetOptionsTask extends AsyncTask<String, Integer, ArrayList> implements Progressable {
         ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -229,9 +218,9 @@ public class MarksActivity extends AppCompatActivity {
                     return null;
             }
             publishProgress(15);
-            myAdapter = new MarksExpandableListAdapter(MarksActivity.this, markses);
+            myAdapter = new MarksExpandableListAdapter(MarksActivity.this, markses,older);
             publishProgress(10);
-            return new ArrayList();
+            return markses;
         }
 
         @Override
@@ -259,6 +248,8 @@ public class MarksActivity extends AppCompatActivity {
                 return;
             }
             super.onPostExecute(arrayList);
+            if(older==null)
+                older=arrayList;
             if (pd != null)
                 pd.hide();
             expandableListView.setAdapter(myAdapter);
@@ -313,7 +304,6 @@ public class MarksActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        marksAd.destroy();
     }
 
     @Override

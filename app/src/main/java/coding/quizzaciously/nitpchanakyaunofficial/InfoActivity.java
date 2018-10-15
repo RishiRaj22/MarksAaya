@@ -56,17 +56,17 @@ public class InfoActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case (R.id.share):
-                    String shareBody = "Download Chanakya app from "+"https://play.google.com/store/apps/details?id="+"coding.quizzaciously.nitpchanakyaunofficial"+" and check marks and attendance instantly. It works offline and shows the marks and attendance with detailed analysis.";
+                    String shareBody = "Download Marks Aaya app from "+"https://play.google.com/store/apps/details?id="+"coding.quizzaciously.nitpchanakyaunofficial"+" and check marks and attendance instantly. It works offline and shows the marks and attendance with detailed analysis.";
                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
-                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Chanakya App");
+                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Marks Aaya App");
                     sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                     startActivity(Intent.createChooser(sharingIntent, "Share App link using:"));      //do share hard
                     break;
                 case (R.id.feedback):
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                             "mailto", "rishiraj.appdev@gmail.com", null));
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback regarding Chanakya App");
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback regarding Marks Aaya App");
                     emailIntent.putExtra(Intent.EXTRA_TEXT, "Feedback:");
                     startActivity(Intent.createChooser(emailIntent, "Send email"));
                     break;

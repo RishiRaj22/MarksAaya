@@ -1,10 +1,12 @@
 package coding.quizzaciously.nitpchanakyaunofficial.datahandler;
 
+import java.io.Serializable;
+
 /**
  * Created by Raj on 23-12-2016.
  */
 
-public class AttendanceValue {
+public class AttendanceValue{
     private String name;
     private int totalClasses;
     private int attendedClasses;

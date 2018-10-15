@@ -12,6 +12,13 @@
         android:textColor="@android:color/black"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/redDot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:textSize="12sp" />
     <TextView
         android:id="@+id/marksText"
         android:layout_width="fill_parent"

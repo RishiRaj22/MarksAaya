@@ -28,7 +28,7 @@
             android:name="coding.quizzaciously.nitpchanakyaunofficial.LoginActivity"
             android:label="Login"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="coding.quizzaciously.nitpchanakyaunofficial.AttendanceActivity"
             android:label="Attendance Status"

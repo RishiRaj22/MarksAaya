@@ -23,12 +23,30 @@ public class AttendanceLoader {
     private final Progressable progressable;
     private Context context;
 
+    public boolean isFileWriteable() {
+        return fileWriteable;
+    }
+
+    public void setFileWriteable(boolean fileWrite) {
+        this.fileWriteable = fileWrite;
+    }
+
+    private boolean fileWriteable=true;
 
 
+
+    /**
+     * Loads the webpage using cookie and session value and returns array of session values. This function writes entire webpage to attendance_temp.html
+     * @param cookie
+     * @return
+     * @throws MarksError
+     */
     public String[] accessOptions(String cookie,String sessionValue) throws MarksError {//If sessionValue not to be given it is null
         URL obj;
         HttpURLConnection con = null;
-        StringBuilder POST_MARKS = new StringBuilder(),temp=new StringBuilder();
+        StringBuilder POST_MARKS;
+        POST_MARKS = new StringBuilder();
+        StringBuilder temp = new StringBuilder();
         try {
             obj = new URL(home + "/attendancestatus.aspx");
 
@@ -40,7 +58,8 @@ public class AttendanceLoader {
         try {
             con = (HttpURLConnection) obj.openConnection();
             con.setReadTimeout(6000);
-            progressable.progress();
+            if(progressable!=null)
+                progressable.progress();
             con.setConnectTimeout(6000);
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", USER_AGENT);
@@ -51,23 +70,24 @@ public class AttendanceLoader {
 
 
             int responseCode = con.getResponseCode();
-            progressable.progress();
+            if(progressable!=null)
+                progressable.progress();
             if (responseCode == HttpURLConnection.HTTP_OK) { // success
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
                 while ((inputLine = in.readLine()) != null) {
-                    Log.d("html",inputLine);
+                    Log.d("html", inputLine);
                     if (inputLine.contains("<option value=")) {
-                        Log.d("temp4",temp.toString());
-                        int l1=0;
-                        for(l1=0;l1<inputLine.length();l1++) {
+                        Log.d("temp4", temp.toString());
+                        int l1 = 0;
+                        for (l1 = 0; l1 < inputLine.length(); l1++) {
 
                             if (inputLine.charAt(l1) == '=') {
                                 for (l1 += 2; inputLine.charAt(l1) != '"'; l1++) {
                                     temp.append(inputLine.charAt(l1));
                                 }
                                 temp.append('\n');
-                                Log.d("temporary_real",temp.toString());
+                                Log.d("temporary_real", temp.toString());
                                 break;
                             }
                         }
@@ -79,7 +99,7 @@ public class AttendanceLoader {
                         // //System.out.println(inputLine);
                         for (int l1 = 0; l1 < inputLine.length(); l1++) {
                             if ((inputLine.charAt(l1) == 'n') && (inputLine.charAt(l1 + 1) == 'a') && (inputLine.charAt(l1 + 2) == 'm') && (inputLine.charAt(l1 + 3) == 'e') && (inputLine.charAt(l1 + 4) == '=') && (inputLine.charAt(l1 + 5) == '"')) {
-                                if (POST_MARKS.length()!=0) {
+                                if (POST_MARKS.length() != 0) {
                                     POST_MARKS.append("&");
                                     // //System.out.println("Yes!!!!!!!!!!!!!!!!!!!!");
                                 }
@@ -105,43 +125,34 @@ public class AttendanceLoader {
                             }
                         }
                     }//end of if hidden
-
-
                 }
-                progressable.progress();
-
-
-                String[] options=temp.toString().split("[\\n]+");
-                if(sessionValue==null)
-                {
-                    sessionValue=options[0];
-                }
-                Log.d("Out",temp.toString());
-                POST_MARKS.append("&ctl00%24ContentPlaceHolder2%24btnsumit=Submit&ctl00%24ContentPlaceHolder2%24ddlexamsession="+sessionValue+"&ctl00%24ContentPlaceHolder2%24txtprogram=");
+                if(progressable!=null)
+                    progressable.progress();
                 in.close();
+                String options[] = temp.toString().split("[\\n]+");
+                if (sessionValue == null) {
+                    sessionValue = options[0];
+                }
                 con.disconnect();
+                POST_MARKS.append("&ctl00%24ContentPlaceHolder2%24btnsumit=Submit&ctl00%24ContentPlaceHolder2%24ddlexamsession=" + sessionValue + "&ctl00%24ContentPlaceHolder2%24txtprogram=");
+
                 //POST
-                byte[] postData= (POST_MARKS.toString()).getBytes();
-                int postDataLength= postData.length;
+                byte[] postData = (POST_MARKS.toString()).getBytes();
+                int postDataLength = postData.length;
                 try {
                     con = (HttpURLConnection) obj.openConnection();
-
                     con.setRequestMethod("POST");
                     con.setRequestProperty("User-Agent", USER_AGENT);
                     con.setRequestProperty("Referer", "http://exam.nitp.ac.in:9001/default.aspx");
                     con.setRequestProperty("Cookie", cookie.toString());
-                    con.setRequestProperty( "charset", "utf-8");
-                    con.setInstanceFollowRedirects( false );
+                    con.setRequestProperty("charset", "utf-8");
+                    con.setInstanceFollowRedirects(false);
                     con.setRequestProperty("Content-Length", String.valueOf(postDataLength));
                     con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
                     con.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
                     con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
                     con.setRequestProperty("Connection", "close");
                     con.setRequestProperty("Upgrade-Insecure-Requests", "1");
-
-
-
-
 
 
                     // For POST only - START
@@ -151,33 +162,37 @@ public class AttendanceLoader {
                     con.getOutputStream().write(postData);
                     os.flush();
                     os.close();
-                    progressable.progress();
+                    if(progressable!=null)
+                        progressable.progress();
+                    String location = "";
+                    if (fileWriteable) {
+                        location = "attendance_temp.html";
+                    } else
+                        location = "attendance_serv.html";
 
-                    String fc="";
-                    boolean bola=false;
+                    String fc = "";
+                    boolean bola = false;
                     responseCode = con.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
-                        StringBuffer returnValue=new StringBuffer();
+                        StringBuffer returnValue = new StringBuffer();
                         in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                        PrintStream file =new PrintStream(context.openFileOutput("attendance_temp.html", Context.MODE_PRIVATE));
+                        PrintStream file = new PrintStream(context.openFileOutput(location, Context.MODE_PRIVATE));
                         file.println(System.currentTimeMillis());
                         while ((inputLine = in.readLine()) != null)
                             file.print(inputLine);
-                        progressable.progress();
-                    }
-                    else
-                    {
+                        if(progressable!=null)
+                            progressable.progress();
+                    } else {
                         throw new MarksError(MarksError.SERVER_ERROR);
                     }
                     return options;
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }
-
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             throw new MarksError(MarksError.CONNECTION_ERROR);
         }
@@ -186,6 +201,7 @@ public class AttendanceLoader {
         }
         return null;
     }
+
     public void setContext(Context context)
     {
         this.context=context;

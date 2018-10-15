@@ -17,19 +17,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginBottom="4dp"
             android:layout_marginTop="3dp"
             android:text="@string/last_updated_unknown"
             android:clickable="false"
             android:id="@+id/update_time"/>
-        <com.google.android.gms.ads.AdView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/marks_ad"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/marks_ad_id"
-            android:layout_alignParentBottom="true"
-            tools:ignore="ObsoleteLayoutParam">
-        </com.google.android.gms.ads.AdView>
     </LinearLayout>
 
 <LinearLayout
@@ -45,18 +37,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:paddingRight="10dp"
-        android:id="@+id/getSession" />
+
         <Spinner
-            android:paddingLeft="10dp"
-            android:layout_width="wrap_content"
+            android:id="@+id/getSession"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:id="@+id/getSem" />
+            android:paddingRight="10dp" />
     </LinearLayout>
     <ExpandableListView
         android:layout_width="match_parent"

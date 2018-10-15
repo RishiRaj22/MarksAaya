@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
@@ -49,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
 //        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        MobileAds.initialize(this,"");
 //        mFirebaseAnalytics.setUserProperty("geniosity","logged out");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
-            pd = new ProgressDialog(LoginActivity.this);
+            pd = new ProgressDialog(LoginActivity.this,R.style.AppTheme_Dark_Dialog);
             pd.setMessage(getString(R.string.logging));
             pd.setCancelable(false);
             pd.show();
@@ -164,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                     case LoginError.SERVER_ERROR:
                         errorMsg=getString(R.string.server_error);
                 }
-                final AlertDialog alertDialog=new AlertDialog.Builder(LoginActivity.this).setTitle(getString(R.string.error)).setMessage(errorMsg).create();
+                final AlertDialog alertDialog=new AlertDialog.Builder(LoginActivity.this,R.style.AppTheme_Dark_Dialog).setTitle(getString(R.string.error)).setMessage(errorMsg).create();
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

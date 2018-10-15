@@ -7,19 +7,11 @@
     android:layout_height="match_parent"
     tools:context="coding.quizzaciously.nitpchanakyaunofficial.WebViewActivity">
 
-    <com.google.android.gms.ads.AdView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        ads:adSize="SMART_BANNER"
-        android:id="@+id/webAd"
-        ads:adUnitId="@string/ad_id_webview">
-    </com.google.android.gms.ads.AdView>
+
 
     <WebView android:id="@+id/webView1"
         android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/webAd"
         xmlns:android="http://schemas.android.com/apk/res/android" />
 </RelativeLayout>

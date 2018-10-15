@@ -14,9 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
@@ -28,18 +25,12 @@ import nitpchankyaunofficial.R;
 
 public class MoreActivity extends AppCompatActivity {
     String cookie;
-    AdView moreAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
         cookie = getIntent().getStringExtra(getString(R.string.cookie));
-        moreAd= (AdView) findViewById(R.id.more_ad);
-        MobileAds.initialize(this,"ca-app-pub-6905676924902031~3315860304");
-        AdRequest adRequest=new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("E13A0941A9BD375F6073D614426FC721").addTestDevice("7106C756201B730736FDD9855AB08A38").build();
-        moreAd.loadAd(adRequest);
-
         TrySite t= new TrySite();
         t.execute(cookie);
 
@@ -165,7 +156,6 @@ public class MoreActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        moreAd.destroy();
     }
 
 }

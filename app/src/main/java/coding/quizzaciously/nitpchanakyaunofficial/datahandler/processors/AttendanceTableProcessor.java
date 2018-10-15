@@ -1,5 +1,7 @@
 package coding.quizzaciously.nitpchanakyaunofficial.datahandler.processors;
 
+import android.util.Log;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -39,7 +41,6 @@ public class AttendanceTableProcessor {
             int i = 0, tot = 0, att = 0, j = 0;
             String ccode = null;
 
-
             while (tdIterator.hasNext()) {
                 if (i == 0)
                     ccode = tdIterator.next().text();
@@ -53,10 +54,12 @@ public class AttendanceTableProcessor {
                 if (i == 2 || i == 4) {
                     try {
                         att += Integer.parseInt(tdIterator.next().text());
-                        if (!tdIterator.hasNext())
-                            i++;
                     } catch (Exception ex) {
                         att += 0;
+                    }
+                    finally {
+                        if(!tdIterator.hasNext())
+                            i++;
                     }
                 }
                 if (i == 5) {
@@ -93,18 +96,19 @@ public class AttendanceTableProcessor {
                     if (i == 2 || i == 4) {
                         try {
                             att += Integer.parseInt(tdIterator.next().text());
+                        } catch (Exception ex) {
+                            att += 0;
+                        }
+                        finally {
                             if (!tdIterator.hasNext()) {
                                 i++;
                             }
-                        } catch (Exception ex) {
-                            att += 0;
                         }
                     }
                     if (i == 5) {
                         AttendanceValue sub = new AttendanceValue(ccode, tot, att);
                         subjectAttendanceValues.get(j).addChild(sub);
                         i -= 6;
-
                         tot = 0;
                         att = 0;
                         ccode = null;
@@ -112,7 +116,6 @@ public class AttendanceTableProcessor {
                     i++;
                 }
                 while (tdIterator.hasNext());
-
                 j++;
             }
             return subjectAttendanceValues;

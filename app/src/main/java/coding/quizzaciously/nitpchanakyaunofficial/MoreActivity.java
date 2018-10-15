@@ -92,7 +92,6 @@ public class MoreActivity extends AppCompatActivity {
 
         for(int i=1;i<s.size();i+=2)
             link.add(s.get(i));
-        Log.d("Gogua",tot+"");
 
 
         final ArrayAdapter adapter= new ArrayAdapter(this, R.layout.more_text, name);
@@ -101,7 +100,6 @@ public class MoreActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Gogua",position+"");
                 if(position!=(tot-1)) {
 
                     if(!link.get(position).contains("AdmitCardPrin.aspx")) {

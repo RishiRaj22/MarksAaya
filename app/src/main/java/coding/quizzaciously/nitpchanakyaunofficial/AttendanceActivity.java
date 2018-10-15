@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,16 +18,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import coding.quizzaciously.nitpchanakyaunofficial.datahandler.AttendanceValue;
+import coding.quizzaciously.nitpchanakyaunofficial.datahandler.Marks;
 import coding.quizzaciously.nitpchanakyaunofficial.datahandler.SubjectAttendanceValue;
 import coding.quizzaciously.nitpchanakyaunofficial.datahandler.processors.AttendanceTableProcessor;
 import coding.quizzaciously.nitpchanakyaunofficial.httprequesthelper.AttendanceLoader;
@@ -244,6 +253,7 @@ public class AttendanceActivity extends AppCompatActivity {
                 }
                 return;
             }
+            notifyAttendance(arrayList);
             super.onPostExecute(arrayList);
             if(oldLoad==null)
                 oldLoad=arrayList;
@@ -298,6 +308,47 @@ public class AttendanceActivity extends AppCompatActivity {
         });
         session.refreshDrawableState();
         // set selection to the 0th or the position where what we have passed stands session.setSelection(2);
+    }
+
+
+    private void notifyAttendance(ArrayList arrayList) {
+
+        Log.d("xyzhoo","asd");
+
+        SharedPreferences sharedPreferences=getSharedPreferences("User Details",MODE_PRIVATE);
+        String userName=sharedPreferences.getString(getString(R.string.roll_number), "    ");
+        sharedPreferences=getSharedPreferences("attendance",MODE_PRIVATE);
+        Set<String> oldKeys=sharedPreferences.getStringSet("attendance",new HashSet<String>());
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.clear();
+        Set<String> keys=new HashSet<String>();
+
+
+        for(int i=0;i<arrayList.size();i++) {
+            SubjectAttendanceValue m= (SubjectAttendanceValue)arrayList.get(i);
+            Log.d("xyzhoo",m.toString());
+            String code=(String)m.getName();
+            keys.add(code);
+            Iterator<AttendanceValue> it=m.attendanceValues.iterator();
+            while (it.hasNext()) {
+                AttendanceValue sub=it.next();
+                String type = sub.getName();
+                if(type.toLowerCase().contains("record"))
+                    continue;
+                Log.d("xyzhoo",code+type+1);
+                FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
+                firebaseDatabase.getReference("attendance").child(userName+code).child(type).setValue(1);
+            }
+            FirebaseMessaging.getInstance().subscribeToTopic("a_"+userName+code);
+        }
+        oldKeys.removeAll(keys);
+
+        Iterator<String> ke=oldKeys.iterator();
+        while (ke.hasNext())
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("m_"+userName+ke.next());
+
+        editor.putStringSet("attendance",keys);
+        editor.apply();
     }
 
     @Override

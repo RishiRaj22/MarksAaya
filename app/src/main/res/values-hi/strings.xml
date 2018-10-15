@@ -40,4 +40,5 @@
     <string name="cookie">cookie</string>
     <string name="credits">जानकारी</string>
     <string name="default_launcher">null</string>
+    <string name="roll_number">"रॉल नंबर "</string>
 </resources>

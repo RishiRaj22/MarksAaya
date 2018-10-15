@@ -36,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText userName;
     @BindView(R.id.password)
     EditText password;
+    @BindView(R.id.rollNumber)
+    EditText rollNumber;
     @BindView(R.id.btn_login)
     AppCompatButton btnLogin;
     LoginTask loginTask;
@@ -48,13 +50,17 @@ public class LoginActivity extends AppCompatActivity {
 //        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        SharedPreferences sharedPreferences=getSharedPreferences("User Details",MODE_PRIVATE);
+        userName.setText(sharedPreferences.getString("User Name",""));
+        rollNumber.setText(sharedPreferences.getString("Roll Number",""));
+        password.setText(sharedPreferences.getString("Password",""));
 //        mFirebaseAnalytics.setUserProperty("geniosity","logged out");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loginTask=new LoginTask();
-                loginTask.execute(userName.getText().toString(),password.getText().toString());
+                loginTask.execute(userName.getText().toString(),password.getText().toString(),rollNumber.getText().toString().substring(0,4));
             }
 
         });
@@ -84,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         int progress=0,errCode=-1;
         boolean success=false;
         ProgressDialog pd;
-        String userName,password,cookie;
+        String userName,password,roll,cookie;
         @Override
         protected void onPreExecute() {
             View view = LoginActivity.this.getCurrentFocus();
@@ -103,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             userName=strings[0];
             password=strings[1];
+            roll=strings[2];
             ChanakyaLogin chanakyaLogin=new ChanakyaLogin(userName,password,this);
             cookie="";
             try {
@@ -140,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor=getSharedPreferences("User Details",MODE_PRIVATE).edit();
                 editor.putString(getString(R.string.user_name),userName);
                 editor.putString(getString(R.string.password),password);
+                editor.putString("Roll Number",roll);
                 editor.apply();
                 editor.commit();
                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);

@@ -38,8 +38,6 @@ public class MarksTableProcessor {
             tempElem = trIterator.next();
             tdIterator = tempElem.select("td").iterator();
             String temp;
-            System.out.println("dkfj");
-            System.out.println(tempElem.select("td").text());
             Marks tempMark = new Marks();
 
 

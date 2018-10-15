@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name"> Marks Aaya</string>
     <string name="user_name">User Name</string>
+    <string name="roll_number">Roll Number</string>
     <string name="password">Password</string>
     <string name="attendance">Attendance</string>
     <string name="marks">Marks</string>
@@ -23,7 +24,7 @@
     <string name="share">Share App</string>
     <string name="feedback">Feedback</string>
     <string name="ourapps">Our apps</string>
-    <string name="disclaimer">The developer is not responsible for the accuracy of the data displayed. We do not store any user ID or password in any form with us. All the information is stored in your device, and HTTP Requests are sent directly to the Chanakya Server from your device. For queries and requests leave us feedback.</string>
+    <string name="disclaimer">The developer is not responsible for the accuracy of the data displayed. We do not store any user ID or password in any form with us. All the information is stored in your device, and HTTP Requests are sent directly to the Chanakya Server from your device. For queries and requests leave us feedback. You do not need to give your full roll number. Only first 4 digits are used to identify your year and branch for notifications.</string>
     <string name="ad_id_webview">ca-app-pub-6905676924902031/5990125106</string>
     <string name="disc_text">Disclaimer</string>
     <string name="developer">Developed by Rishi Raj &amp; Ritu Raj</string>

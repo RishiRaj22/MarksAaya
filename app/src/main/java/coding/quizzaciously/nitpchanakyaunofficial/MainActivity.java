@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences=getSharedPreferences("User Details",MODE_PRIVATE);
-        if(sharedPreferences.getString(getString(R.string.user_name),null)==null)
+        if(sharedPreferences.getString(getString(R.string.user_name),null)==null||sharedPreferences.getString(getString(R.string.roll_number),null)==null)
         {
             Intent intent=new Intent(this,LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -319,6 +319,12 @@ public class MainActivity extends AppCompatActivity {
                 file = new File(MainActivity.this.getFilesDir(), "more_temp.html");
                 file.delete();
                 SharedPreferences.Editor sharedEdit = getSharedPreferences("User Details", MODE_PRIVATE).edit();
+                sharedEdit.clear();
+                sharedEdit.commit();
+                sharedEdit = getSharedPreferences("marks", MODE_PRIVATE).edit();
+                sharedEdit.clear();
+                sharedEdit.commit();
+                sharedEdit = getSharedPreferences("attendance", MODE_PRIVATE).edit();
                 sharedEdit.clear();
                 sharedEdit.commit();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);

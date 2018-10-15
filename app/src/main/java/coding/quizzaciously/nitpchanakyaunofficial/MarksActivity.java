@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.ArraySet;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,13 +19,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -247,6 +256,7 @@ public class MarksActivity extends AppCompatActivity {
                 }
                 return;
             }
+            notifyMarks(arrayList);
             super.onPostExecute(arrayList);
             if(older==null)
                 older=arrayList;
@@ -255,6 +265,52 @@ public class MarksActivity extends AppCompatActivity {
             expandableListView.setAdapter(myAdapter);
             expandableListView.refreshDrawableState();
         }
+    }
+
+    private void notifyMarks(ArrayList arrayList) {
+
+        Log.d("xyzhoo","asd");
+        SharedPreferences sharedPreferences=getSharedPreferences("User Details",MODE_PRIVATE);
+        String userName=sharedPreferences.getString(getString(R.string.roll_number), "    ");
+        sharedPreferences=getSharedPreferences("marks",MODE_PRIVATE);
+        Set<String> oldKeys=sharedPreferences.getStringSet("marks",new HashSet<String>());
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.clear();
+        Set<String> keys=new HashSet<String>();
+
+
+        for(int i=0;i<arrayList.size();i++) {
+            Marks m= (Marks)arrayList.get(i);
+            String code=(String)m.getFieldValues().get(m.subPos);
+            keys.add(code);
+            Iterator<Integer> it=m.whereLiesMarks.iterator();
+            while (it.hasNext()) {
+                int sub=it.next();
+                Object o = m.getFieldValues().get(sub);
+                if(o instanceof String)
+                    continue;
+                if(!(o instanceof Float))
+                    continue;
+                float val=(float)o;
+                if(val==0)
+                    continue;
+                String type = Marks.getType().get(sub);
+                if(type.toLowerCase().contains("record"))
+                    continue;
+                Log.d("xyzhoo",code+type+1);
+                FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
+                firebaseDatabase.getReference("marks").child(userName+code).child(type).setValue(1);
+            }
+            FirebaseMessaging.getInstance().subscribeToTopic("m_"+userName+code);
+        }
+        oldKeys.removeAll(keys);
+
+        Iterator<String> ke=oldKeys.iterator();
+        while (ke.hasNext())
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("m_"+userName+ke.next());
+
+        editor.putStringSet("marks",keys);
+        editor.apply();
     }
 
     private void writeToOptions(final String[] sessions) {

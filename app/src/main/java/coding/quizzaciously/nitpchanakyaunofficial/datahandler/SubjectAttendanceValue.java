@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class SubjectAttendanceValue extends AttendanceValue {
-    private List<AttendanceValue> attendanceValues;
+    public List<AttendanceValue> attendanceValues;
     public SubjectAttendanceValue(String name, int totalClasses, int attendedClasses) {
         this(name, totalClasses, attendedClasses,new ArrayList<AttendanceValue>());
     }

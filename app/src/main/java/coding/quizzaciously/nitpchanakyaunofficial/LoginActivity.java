@@ -60,7 +60,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loginTask=new LoginTask();
-                loginTask.execute(userName.getText().toString(),password.getText().toString(),rollNumber.getText().toString().substring(0,4));
+                String temp=rollNumber.getText().toString();
+                if(temp.length()<4) {
+                    final AlertDialog alertDialog=new AlertDialog.Builder(LoginActivity.this,R.style.AppTheme_Dark_Dialog).setTitle(getString(R.string.error)).setMessage("Invalid roll number").create();
+                    alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.hide();
+                        }
+                    });
+                    alertDialog.show();
+                    return;
+                }
+                temp=temp.substring(0,4);
+                loginTask.execute(userName.getText().toString(),password.getText().toString(),temp);
             }
 
         });

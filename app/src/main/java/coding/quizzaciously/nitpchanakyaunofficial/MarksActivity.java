@@ -295,7 +295,7 @@ public class MarksActivity extends AppCompatActivity {
                 if(val==0)
                     continue;
                 String type = Marks.getType().get(sub);
-                if(type.toLowerCase().contains("record"))
+                if(type.toLowerCase().contains("record")||type.trim().equals("0"))
                     continue;
                 Log.d("xyzhoo",code+type+1);
                 FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();

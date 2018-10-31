@@ -333,7 +333,7 @@ public class AttendanceActivity extends AppCompatActivity {
             while (it.hasNext()) {
                 AttendanceValue sub=it.next();
                 String type = sub.getName();
-                if(type.toLowerCase().contains("record"))
+                if(type.toLowerCase().contains("record")||type.trim().equals("0"))
                     continue;
                 Log.d("xyzhoo",code+type+1);
                 FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
